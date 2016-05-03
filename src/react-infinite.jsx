@@ -39,6 +39,10 @@ var Infinite = React.createClass({
     // This is the total height of the visible window. One
     // of
     containerHeight: React.PropTypes.number,
+    externalScrollable: React.PropTypes.shape({
+      getScrollTop: React.PropTypes.func,
+      setScrollTop: React.PropTypes.func
+    }),
     useWindowAsScrollContainer: React.PropTypes.bool,
 
     displayBottomUpwards: React.PropTypes.bool.isRequired,
@@ -196,6 +200,14 @@ var Infinite = React.createClass({
       };
       utilities.scrollShouldBeIgnored = () => false;
       utilities.buildScrollableStyle = () => ({});
+    } else if (props.externalScrollable) {
+      utilities.subscribeToScrollListener = () => {};
+      utilities.unsubscribeFromScrollListener = () => {};
+      utilities.nodeScrollListener = () => {};
+      utilities.getScrollTop = props.externalScrollable.getScrollTop;
+      utilities.setScrollTop = props.externalScrollable.setScrollTop;
+      utilities.scrollShouldBeIgnored = () => false;
+      utilities.buildScrollableStyle = () => ({});
     } else {
       utilities.subscribeToScrollListener = () => {};
       utilities.unsubscribeFromScrollListener = () => {};
@@ -334,7 +346,11 @@ var Infinite = React.createClass({
     if (this.utils.scrollShouldBeIgnored(e)) {
       return;
     }
-    this.computedProps.handleScroll(ReactDOM.findDOMNode(this.refs.scrollable));
+    if (this.props.getScrollable) {
+      this.computedProps.handleScroll(ReactDOM.findDOMNode(this.props.getScrollable()));
+    } else {
+      this.computedProps.handleScroll(ReactDOM.findDOMNode(this.refs.scrollable));
+    }
     this.handleScroll(this.utils.getScrollTop());
   },
 
