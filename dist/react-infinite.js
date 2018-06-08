@@ -2318,9 +2318,9 @@ arguments[4][5][0].apply(exports,arguments)
 
 },{}],27:[function(require,module,exports){
 (function (global){
-"use strict";var React=global.React||require("react");module.exports={preloadType:React.PropTypes.oneOfType([React.PropTypes.number,React.PropTypes.shape({type:React.PropTypes.oneOf(["containerHeightScaleFactor"]).isRequired,amount:React.PropTypes.number.isRequired})])};
+"use strict";var React=global.React||require("react"),PropTypes=require("prop-types");module.exports={preloadType:PropTypes.oneOfType([PropTypes.number,PropTypes.shape({type:PropTypes.oneOf(["containerHeightScaleFactor"]).isRequired,amount:PropTypes.number.isRequired})])};
 
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"react":undefined}]},{},[1])(1)
+},{"prop-types":16,"react":undefined}]},{},[1])(1)
 });
